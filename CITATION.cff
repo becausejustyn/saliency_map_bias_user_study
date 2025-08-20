@@ -1,0 +1,33 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Model Weights - XAI Saliency Bias Study
+message: >-
+  If you use this dataset, please cite it using the metadata
+  from this file.
+type: dataset
+authors:
+  - given-names: Justyn
+    family-names: Rodrigues
+    orcid: 'https://orcid.org/0000-0001-8980-0685'
+  - orcid: 'https://orcid.org/0000-0003-2247-3020'
+    affiliation: The University of Melbourne
+    given-names: Krista A.
+    family-names: Ehinger
+  - email: rosalind.wang@westernsydney.edu.au
+    family-names: Wang
+    given-names: Rosalind
+    affiliation: Western Sydney University
+    orcid: 'https://orcid.org/0000-0001-5454-6197'
+  - given-names: Oliver
+    family-names: Obst
+    affiliation: Western Sydney University
+    orcid: 'https://orcid.org/0000-0002-8284-2062'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.16907686
+    description: Zenodo URL
+repository-code: >-
+  https://github.com/becausejustyn/saliency_map_bias_user_study
+license: Apache-2.0
