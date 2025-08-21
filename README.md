@@ -24,3 +24,5 @@ To do
 
 - [ ] Include source for for visualisations.
 - [ ] Update `07_Analysis_Prep.ipynb` to include `binom.test` for the user study results. Also check which functions included are still needed.
+- [ ] Update `04_Explainations.ipynb` to include the source code used to generate the explanations.
+- [ ] Update `05_Model_Evaluation.ipynb` to include the source code used to evaluate the models.
