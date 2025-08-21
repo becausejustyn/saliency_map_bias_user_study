@@ -23,3 +23,4 @@ The dataset used for training the models is based on the [Diverse Human Faces Da
 To do
 
 - [ ] Include source for for visualisations.
+- [ ] Update `07_Analysis_Prep.ipynb` to include `binom.test` for the user study results. Also check which functions included are still needed.
