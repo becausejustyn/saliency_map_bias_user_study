@@ -1,4 +1,4 @@
-# saliency_map_bias_user_study
+# Supplementary Material for Do Explanations Expose Bias? How Saliency Maps Affect Judgements of Biased Face-Recognition Models
 
 The dataset used for training the models is based on the [Diverse Human Faces Dataset](https://synthesis.ai/diverse-human-faces-dataset/). Follow the instructions on their website to download the dataset. The dataset is not included in this repository due to its size. 
 
@@ -18,9 +18,7 @@ The dataset used for training the models is based on the [Diverse Human Faces Da
 
 `src`: Containers helper scripts for the project.
 
-## Supplementary Data Stored Over at Zenodo
-
-> Update link when it has been published.
+## Supplementary Data Stored Over at [Zenodo](https://zenodo.org/records/16907686)
 
 ### Models
 
