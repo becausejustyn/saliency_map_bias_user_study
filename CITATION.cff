@@ -2,7 +2,7 @@
 # Visit https://bit.ly/cffinit to generate yours today!
 
 cff-version: 1.2.0
-title: Model Weights - XAI Saliency Bias Study
+title: Supplementaty Material: Do Explanations Expose Bias? How Saliency Maps Affect Judgements of Biased Face-Recognition Models
 message: >-
   If you use this dataset, please cite it using the metadata
   from this file.
@@ -11,10 +11,10 @@ authors:
   - given-names: Justyn
     family-names: Rodrigues
     orcid: 'https://orcid.org/0000-0001-8980-0685'
-  - orcid: 'https://orcid.org/0000-0003-2247-3020'
-    affiliation: The University of Melbourne
-    given-names: Krista A.
+  - given-names: Krista A.
     family-names: Ehinger
+    affiliation: The University of Melbourne
+    orcid: 'https://orcid.org/0000-0003-2247-3020'
   - email: rosalind.wang@westernsydney.edu.au
     family-names: Wang
     given-names: Rosalind
