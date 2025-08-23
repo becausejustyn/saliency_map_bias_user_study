@@ -18,9 +18,41 @@ The dataset used for training the models is based on the [Diverse Human Faces Da
 
 `src`: Containers helper scripts for the project.
 
+## Supplementary Data Stored Over at Zenodo
+
+> Update link when it has been published.
+
+### Models
+
+- `fair.pt`: the balanced model.
+- `light_undersampled.pt`: the light skin tone undersampled model.
+- `dark_undersampled.pt`: the dark skin tone undersampled model.
+
+### Datasets
+
+These are the subset of each dataset used to train the models above.
+
+- `light_undersampled_cropped.zip`: the dataset for the `light_undersampled.pt`.
+- `dark_undersampled_cropped.zip`	: the dataset for the `dark_undersampled.pt`.
+- `diverse_human_faces_cropped.zip`: the dataset for the `fair.pt`.
+
+### Trial Data
+
+These relate to the data used during the trials (experiement ran on Profilic).
+
+- `trial_dataset.csv`: overview of the images used for each trial. `model_1` and `model_2` refers to which models relate to the specific trial. 
+- `trial_dataset_long.csv`: a deeper overview of `trial_dataset.csv`, giving specific details about each image.
+- `trial_images.zip`: for each trial n, all the images that were generated. Refer to `trial_dataset_long.csv` to see which images were used in each trial. 
+
+### Metadata
+
+This is the metadata from the original dataset, [Diverse Human Faces Dataset](https://synthesis.ai/diverse-human-faces-dataset/).
+
+- `dataset_metadata.csv`: metadata for all the images in original dataset with labels created in `01_Dataset_Prep.ipynb`.
 
 
-To do
+
+## To do
 
 - [ ] Include source for for visualisations.
 - [ ] Update `07_Analysis_Prep.ipynb` to include `binom.test` for the user study results. Also check which functions included are still needed.
