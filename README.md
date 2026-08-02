@@ -1,5 +1,9 @@
 # Supplementary Material for Do Explanations Expose Bias? How Saliency Maps Affect Judgements of Biased Face-Recognition Models
 
+This repository contains the code and supplementary material for the paper:
+
+> Justyn Rodrigues, Krista A. Ehinger, Oliver Obst and X. Rosalind Wang (2025). **Do Explanations Expose Bias? How Saliency Maps Affect Judgements of Biased Face-Recognition Models.** In *ECAI 2025 – 28th European Conference on Artificial Intelligence*, Frontiers in Artificial Intelligence and Applications, vol. 413, pp. 1229–1236. IOS Press. [doi:10.3233/FAIA250936](https://doi.org/10.3233/FAIA250936)
+
 The dataset used for training the models is based on the [Diverse Human Faces Dataset](https://synthesis.ai/diverse-human-faces-dataset/). Follow the instructions on their website to download the dataset. The dataset is not included in this repository due to its size. 
 
 > 📝 **Note:** When you download this dataset, it will download all 70,001 files into your active directory, so make sure you create a directory first.
@@ -48,11 +52,22 @@ This is the metadata from the original dataset, [Diverse Human Faces Dataset](ht
 
 - `dataset_metadata.csv`: metadata for all the images in original dataset with labels created in `01_Dataset_Prep.ipynb`.
 
+## Citation
+
+If you use this code or data, please cite the paper:
+
+```bibtex
+@incollection{rodrigues2025explanations,
+  author    = {Rodrigues, Justyn and Ehinger, Krista A. and Obst, Oliver and Wang, X. Rosalind},
+  title     = {Do Explanations Expose Bias? How Saliency Maps Affect Judgements of Biased Face-Recognition Models},
+  booktitle = {ECAI 2025 -- 28th European Conference on Artificial Intelligence},
+  series    = {Frontiers in Artificial Intelligence and Applications},
+  volume    = {413},
+  pages     = {1229--1236},
+  publisher = {IOS Press},
+  year      = {2025},
+  doi       = {10.3233/FAIA250936}
+}
+```
 
 
-## To do
-
-- [ ] Include source for for visualisations.
-- [ ] Update `07_Analysis_Prep.ipynb` to include `binom.test` for the user study results. Also check which functions included are still needed.
-- [ ] Update `04_Explainations.ipynb` to include the source code used to generate the explanations.
-- [ ] Update `05_Model_Evaluation.ipynb` to include the source code used to evaluate the models.
