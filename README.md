@@ -14,10 +14,10 @@ The dataset used for training the models is based on the [Diverse Human Faces Da
 2. [Data preprocessing](02_Preprocessing_Data.md) ([notebook](02_Preprocessing_Data.ipynb)): Preprocesses the data for training the models.
 3. [Training](03_Training.md) ([notebook](03_Training.ipynb)): Contains the training code for the models.
 4. [Explanations](04_Explainations.md) ([notebook](04_Explainations.ipynb)): Generates explanations for the trained models.
-5. [Model evaluation](05_Model_Evaluation.ipynb): Evaluates the models' performance.
-6. [Trial preparation](06_Preparing_Trials.md) ([notebook](06_Preparing_Trials.ipynb)): Prepares trials for the user study.
-7. [Analysis preparation](07_Analysis_Prep.md) ([notebook](07_Analysis_Prep.ipynb)): Prepares the user study results for analysis.
+5. [Trial preparation](06_Preparing_Trials.md) ([notebook](06_Preparing_Trials.ipynb)): Prepares trials for the user study.
+6. [Analysis preparation](07_Analysis_Prep.md) ([notebook](07_Analysis_Prep.ipynb)): Prepares the user study results for analysis.
 
+The Markdown versions include all outputs saved in the notebooks. Cells without saved outputs are shown as code only.
 
 
 `src`: Containers helper scripts for the project.
@@ -69,4 +69,3 @@ If you use this code or data, please cite the paper:
   doi       = {10.3233/FAIA250936}
 }
 ```
-
