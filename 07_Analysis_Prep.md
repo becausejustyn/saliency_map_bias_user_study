@@ -1,6 +1,17 @@
+This post-study analysis is written entirely in R. The helper functions `parse_drive()`, `rename_columns()`, `participant_condition()`, `reverse_conditions()`, `cond_label()`, and `preferred_model()` are provided by the [`brrr`](https://github.com/becausejustyn/brrr) package.
+
 ```r
+# Install brrr once if it is not already available:
+# install.packages("remotes")
+# remotes::install_github("becausejustyn/brrr")
+
+library(brrr)
 library(uuid)
 library(dplyr)
+library(readr)
+library(purrr)
+library(stringr)
+library(tidyr)
 library(broom)
 library(ggplot2)
 options(scipen = 999)
@@ -225,7 +236,7 @@ write_csv(x = exp_df_long1, file = '/content/experiment_data_by_trial.csv')
 ```
 
 
-```python
+```r
 exp_by_trial_path <- parse_drive(id = '1YR11qI6J9OXZFqRy6iG-kmjpiSup73re')
 exp_long_path <- parse_drive(id = '11G-Exe4VTLxzLWWFufpi6qBISCA6MKek')
 exp_wide_path <- parse_drive(id = '1MEl8BhB7TtAnAZ9NoCc9mDkM8Z8aGKyW')
