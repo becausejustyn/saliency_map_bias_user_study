@@ -95,23 +95,23 @@ def create_sample_paths(participant_df, condition_df, file_dict, random_seed = N
         Condition_df: dataframe with the condition order for each participant
         File_dict: dictionary with the file paths for each model
     '''
-    np.random.seed(RANDOM_SEED)
-    random.seed(RANDOM_SEED)
+    rng = random.Random(RANDOM_SEED if random_seed is None else random_seed)
+    participant_paths = participant_df.copy()
 
-    for participant in participant_df.index:
+    for participant in participant_paths.index:
 
         first_model = condition_df.loc[participant, 'first_model']
         second_model = condition_df.loc[participant, 'second_model']
 
-        first_model_files = file_dict[first_model]
-        second_model_files = file_dict[second_model]
+        first_model_files = file_dict[first_model].copy()
+        second_model_files = file_dict[second_model].copy()
 
-        random.shuffle(first_model_files) 
-        random.shuffle(second_model_files) 
+        rng.shuffle(first_model_files)
+        rng.shuffle(second_model_files)
 
-        participant_df.loc[participant, 'Trial 1':'Trial 16'] = first_model_files 
-        participant_df.loc[participant, 'Trial 17':'Trial 32'] = second_model_files 
-    return participant_df
+        participant_paths.loc[participant, 'Trial 1':'Trial 16'] = first_model_files
+        participant_paths.loc[participant, 'Trial 17':'Trial 32'] = second_model_files
+    return participant_paths
 ```
 
 
@@ -853,5 +853,4 @@ merged_df
 </table>
 <p>48 rows × 7 columns</p>
 </div>
-
 
