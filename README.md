@@ -8,16 +8,16 @@ The dataset used for training the models is based on the [Diverse Human Faces Da
 
 > 📝 **Note:** When you download this dataset, it will download all 70,001 files into your active directory, so make sure you create a directory first.
 
-## Notebooks
+## Workflow
 
-1. [Dataset preparation](01_Dataset_Prep.md) ([notebook](01_Dataset_Prep.ipynb)): Prepares the dataset by creating labels and organising files.
-2. [Data preprocessing](02_Preprocessing_Data.md) ([notebook](02_Preprocessing_Data.ipynb)): Preprocesses the data for training the models.
-3. [Training](03_Training.md) ([notebook](03_Training.ipynb)): Contains the training code for the models.
-4. [Explanations](04_Explainations.md) ([notebook](04_Explainations.ipynb)): Generates explanations for the trained models.
-5. [Trial preparation](06_Preparing_Trials.md) ([notebook](06_Preparing_Trials.ipynb)): Prepares trials for the user study.
-6. [Analysis preparation](07_Analysis_Prep.md) ([notebook](07_Analysis_Prep.ipynb)): Prepares the user study results for analysis.
+1. [Dataset preparation](01_Dataset_Prep.md): Prepares the dataset by creating labels and organising files.
+2. [Data preprocessing](02_Preprocessing_Data.md): Preprocesses the data for training the models.
+3. [Training](03_Training.md): Contains the training code for the models.
+4. [Explanations](04_Explainations.md): Generates explanations for the trained models.
+5. [Trial preparation](06_Preparing_Trials.md): Prepares trials for the user study.
+6. [Analysis preparation](07_Analysis_Prep.md): Prepares the user study results for analysis.
 
-The Markdown versions include all outputs saved in the notebooks. Cells without saved outputs are shown as code only.
+The Markdown files include all outputs that were saved in the original notebooks. Cells without saved outputs are shown as code only.
 
 
 `src`: Containers helper scripts for the project.
@@ -50,7 +50,7 @@ These relate to the data used during the trials (experiement ran on Profilic).
 
 This is the metadata from the original dataset, [Diverse Human Faces Dataset](https://synthesis.ai/diverse-human-faces-dataset/).
 
-- `dataset_metadata.csv`: metadata for all the images in original dataset with labels created in `01_Dataset_Prep.ipynb`.
+- `dataset_metadata.csv`: metadata for all the images in original dataset with labels created in [`01_Dataset_Prep.md`](01_Dataset_Prep.md).
 
 ## Citation
 
