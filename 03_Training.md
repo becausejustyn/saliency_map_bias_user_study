@@ -1,6 +1,3 @@
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/becausejustyn/xai_ppa/blob/main/notebooks/training.ipynb)
-
-
 ```python
 # if running on colab install facenet-pytorch
 ON_COLAB = 'google.colab' in str(get_ipython())

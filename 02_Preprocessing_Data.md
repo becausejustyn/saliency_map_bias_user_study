@@ -1,5 +1,3 @@
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/becausejustyn/xai_ppa/blob/main/notebooks/preprocessing_faces.ipynb)
-
 This will create a new directory for `data/dark_undersampled/` and `data/light_undersampled/` that will be cropped and downsized to `(256, 256)`. The file size is much smaller once resized so I am not too concerned.
 
 
