@@ -138,10 +138,10 @@ with np.testing.suppress_warnings() as sup:
 
 
 ```python
-dataset = ImageFolder(DARK_UNDERSAMPLED_PATH, transform = Resize(NEW_SIZE))
+dataset = ImageFolder(LIGHT_UNDERSAMPLED_PATH, transform = Resize(NEW_SIZE))
 
 dataset.samples = [
-    (p, p.replace(DARK_UNDERSAMPLED_PATH, DARK_UNDERSAMPLED_PATH + '_cropped'))
+    (p, p.replace(LIGHT_UNDERSAMPLED_PATH, LIGHT_UNDERSAMPLED_PATH + '_cropped'))
         for p, _ in dataset.samples
 ]
 
