@@ -8,9 +8,11 @@ if ON_COLAB:
 if ON_COLAB:
     BASE_PATH = '/content/drive/MyDrive/xai_faces/'
     MODEL_PATH = '/content/drive/MyDrive/xai_faces/models/'
+    XAI_DEST = '/content/drive/MyDrive/xai_faces/xai_samples'
 else:
     BASE_PATH = '../data/'
     MODEL_PATH = '../models/'
+    XAI_DEST = '../xai_samples'
         
 DARK_UNDERSAMPLED_PATH = BASE_PATH + 'dark_undersampled_cropped' 
 LIGHT_UNDERSAMPLED_PATH = BASE_PATH + 'light_undersampled_cropped' 
@@ -18,6 +20,11 @@ FAIR_PATH = BASE_PATH + 'diverse_human_faces_cropped'
 DARK_MODEL_PATH = MODEL_PATH + 'dark_undersampled1.pt'
 LIGHT_MODEL_PATH = MODEL_PATH + 'light_undersampled1.pt'
 FAIR_MODEL_PATH = MODEL_PATH + 'fair.pt'
+
+# Match the directory layout consumed by 06_Preparing_Trials.md.
+XAI1_PATH = XAI_DEST + '/coldnhot/XAI1'
+XAI2_PATH = XAI_DEST + '/coldnhot/XAI2'
+XAI3_PATH = XAI_DEST + '/hot/XAI3'
 
 RANDOM_SEED = 80223
 ```
@@ -50,6 +57,7 @@ import matplotlib.pyplot as plt
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 coldnhot = '0ff, 00f, 80:000, f00, ff0, fff'
+hot = '000, f00, ff0, fff'
 ```
 
 
@@ -83,7 +91,7 @@ def generate_xai_image(method, model, data, target, noise_level = 0.1, n_iter = 
     elif method == 'EpsilonGammaBox':
         # the EpsilonGammaBox composite needs the lowest and highest values, which are here for ImageNet 0. and 1. with a different normalization for each channel
         transform_norm = Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
-        low, high = transform_norm(torch.tensor([[[[[0.]]] * 3], [[[[1.]]] * 3]])) # create a composite, specifying required arguments
+        low, high = transform_norm(torch.tensor([[[[[0.]]] * 3], [[[[1.]]] * 3]], device = data.device)) # create a composite, specifying required arguments
         composite = EpsilonGammaBox(low = low, high = high)
         with Gradient(model = model, composite = composite) as attributor: 
             output, attribution = attributor(data, target)
@@ -99,7 +107,7 @@ def lrp_plus_flat(model, data, target, cmap = 'coldnhot', image_name = None, sav
 
   # the ZBox rule needs the lowest and highest values, which are here for ImageNet 0. and 1. with a different normalization for each channel        
   transform_norm = Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
-  low, high = transform_norm(torch.tensor([[[[[0.]]] * 3], [[[[1.]]] * 3]]))
+  low, high = transform_norm(torch.tensor([[[[[0.]]] * 3], [[[[1.]]] * 3]], device = data.device))
 
   # create a composite, specifying the canonizers
   composite = EpsilonPlusFlat(canonizers = [canonizer])
@@ -123,7 +131,7 @@ def lrp_eps_gamma(model, data, target, cmap = 'coldnhot', image_name = None, sav
 
   # the ZBox rule needs the lowest and highest values, which are here for ImageNet 0. and 1. with a different normalization for each channel        
   transform_norm = Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
-  low, high = transform_norm(torch.tensor([[[[[0.]]] * 3], [[[[1.]]] * 3]]))
+  low, high = transform_norm(torch.tensor([[[[[0.]]] * 3], [[[[1.]]] * 3]], device = data.device))
 
   # create a composite, specifying the canonizers
   composite = EpsilonGammaBox(low = low, high = high, canonizers = [canonizer])
@@ -147,7 +155,7 @@ def layer_map_comp(model, data, target, cmap = 'coldnhot', image_name = None, sa
 
   # the ZBox rule needs the lowest and highest values, which are here for ImageNet 0. and 1. with a different normalization for each channel        
   transform_norm = Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
-  low, high = transform_norm(torch.tensor([[[[[0.]]] * 3], [[[[1.]]] * 3]]))
+  low, high = transform_norm(torch.tensor([[[[[0.]]] * 3], [[[[1.]]] * 3]], device = data.device))
 
   # create a composite, specifying the canonizers, if any
   composite = SpecialFirstLayerMapComposite(
@@ -214,45 +222,17 @@ def get_pred(model, data, target, dataset):
 def get_prediction(row):
     input_image, input_target = dataset.imgs[row['dataset_index']]
     image = Image.open(input_image)
-    data = transform(image)[None]
-    target = torch.eye(len(dataset.classes))[[input_target]]
+    data = transform(image)[None].to(DEVICE)
+    target = torch.eye(len(dataset.classes), device = DEVICE)[[input_target]]
     predicted_class, predicted_prob = get_pred(model=MODEL, data=data, target=target, dataset=dataset)
     return int(predicted_class), predicted_prob
 ```
 
-```bash
-# Note use this from the terminal, which will use the base path
-
-# create varoab;e
-export experiment1_path=xai_samples
-
-for i in {1..5}; do
-    for heatmap in cold hot coldnhot; do
-        mkdir -p $experiment1_path/XAI$i/$heatmap/dark_undersampled \
-                 $experiment1_path/XAI$i/$heatmap/light_undersampled \
-                 $experiment1_path/XAI$i/$heatmap/fair_model
-    done
-done
-
-# check that they were made
-for i in {1..5}; do
-    echo "Subdirectories in XAI$i:"
-    for heatmap in cold hot coldnhot; do
-        ls $experiment1_path/XAI$i/$heatmap | grep -E 'dark_undersampled|light_undersampled|fair_model'
-    done
-done
-```
-
+The output structure matches the paths used during trial preparation.
 
 ```python
-transform_norm = Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
-
-# define the full tensor transform
-transform = Compose([
-    base_transform,
-    ToTensor(),
-    transform_norm,
-])
+for explanation_path in (XAI1_PATH, XAI2_PATH, XAI3_PATH):
+    os.makedirs(os.path.join(explanation_path, 'fair_model'), exist_ok = True)
 ```
 
 
@@ -268,9 +248,14 @@ transform = Compose([
     transform_norm,
 ])
 
-#dataset = ImageFolder(FULL_DATA_PATH, transform = base_transform)
-dataset = ImageFolder(FULL_DATA_PATH)
+dataset = ImageFolder(FAIR_PATH)
 class_to_idx = dataset.class_to_idx
+
+# Generate fair-model explanations for every image in the cropped fair dataset.
+fair_samples = pd.DataFrame({
+    'dataset_index': range(len(dataset.imgs)),
+    'image_path': [image_path for image_path, _ in dataset.imgs],
+})
 
 # MODEL / resnet
 MODEL = InceptionResnetV1(
@@ -292,13 +277,11 @@ MODEL.eval();
 ### XAI 1: Epsilon Plus Flat
 for index, row in tqdm(fair_samples.iterrows(), total = len(fair_samples)):
   input_image, input_target = dataset.imgs[row['dataset_index']]
-  image_name = f"xai_{row['image_path'].split('/')[-1]}"
-  #image_path = os.path.join(XAI1_PATH, 'hot', 'fair_model', image_name)
-  image_path = os.path.join(XAI1_PATH, 'coldnhot', 'fair_model', image_name)
+  image_name = f"xai_{os.path.basename(row['image_path'])}"
+  image_path = os.path.join(XAI1_PATH, 'fair_model', image_name)
   image = Image.open(input_image)
-  data = transform(image)[None]
-  target = torch.eye(len(class_to_idx))[[input_target]]
-  #lrp_plus_flat(model = MODEL, data = data, target = target, save_image = True, image_name = image_path, symmetric = False, cmap = hot)
+  data = transform(image)[None].to(DEVICE)
+  target = torch.eye(len(class_to_idx), device = DEVICE)[[input_target]]
   lrp_plus_flat(model = MODEL, data = data, target = target, save_image = True, image_name = image_path, symmetric = True, cmap = coldnhot)
 ```
 
@@ -307,15 +290,12 @@ for index, row in tqdm(fair_samples.iterrows(), total = len(fair_samples)):
 ### XAI 2: Epsilon Gamma Box
 for index, row in tqdm(fair_samples.iterrows(), total = len(fair_samples)):
   input_image, input_target = dataset.imgs[row['dataset_index']]
-  image_name = f"xai_{row['image_path'].split('/')[-1]}"
-  # image_name = f"xai_{row['image_path'].split('/')[-1]}"
-  #image_path = os.path.join(XAI2_PATH, 'hot', 'fair_model', image_name)
-  image_path = os.path.join(XAI2_PATH, 'coldnhot', 'fair_model', image_name)
+  image_name = f"xai_{os.path.basename(row['image_path'])}"
+  image_path = os.path.join(XAI2_PATH, 'fair_model', image_name)
   image = Image.open(input_image)
-  data = transform(image)[None]
-  target = torch.eye(len(class_to_idx))[[input_target]]
+  data = transform(image)[None].to(DEVICE)
+  target = torch.eye(len(class_to_idx), device = DEVICE)[[input_target]]
   lrp_eps_gamma(model = MODEL, data = data, target = target, save_image = True, image_name = image_path, symmetric = True, cmap = coldnhot)
-  #lrp_eps_gamma(model = MODEL, data = data, target = target, save_image = True, image_name = image_path, symmetric = False, cmap = hot)
 ```
 
 
@@ -323,13 +303,11 @@ for index, row in tqdm(fair_samples.iterrows(), total = len(fair_samples)):
 ### XAI 3: Layer Map Composite
 for index, row in tqdm(fair_samples.iterrows(), total = len(fair_samples)):
   input_image, input_target = dataset.imgs[row['dataset_index']]
-  image_name = f"xai_{row['image_path'].split('/')[-1]}"
-  image_path = os.path.join(XAI3_PATH, 'hot', 'fair_model', image_name)
-  #image_path = os.path.join(XAI3_PATH, 'coldnhot', 'fair_model', image_name)
+  image_name = f"xai_{os.path.basename(row['image_path'])}"
+  image_path = os.path.join(XAI3_PATH, 'fair_model', image_name)
   image = Image.open(input_image)
-  data = transform(image)[None]
-  target = torch.eye(len(class_to_idx))[[input_target]]
-  #layer_map_comp(model = MODEL, data = data, target = target, save_image = True, image_name = image_path, symmetric = True, cmap = coldnhot)
+  data = transform(image)[None].to(DEVICE)
+  target = torch.eye(len(class_to_idx), device = DEVICE)[[input_target]]
   layer_map_comp(model = MODEL, data = data, target = target, save_image = True, image_name = image_path, symmetric = False, cmap = hot)
 ```
 
